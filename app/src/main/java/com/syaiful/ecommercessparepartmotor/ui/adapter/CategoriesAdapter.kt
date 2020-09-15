@@ -9,15 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.syaiful.ecommercessparepartmotor.R
-import com.syaiful.ecommercessparepartmotor.model.categories.Categories
+import com.syaiful.ecommercessparepartmotor.model.category.Category
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.Holder> {
 
     lateinit var context: Context
-    lateinit var categories: ArrayList<Categories>
-    lateinit var onItemClick : (Categories,Int) -> Unit
+    lateinit var categories: ArrayList<Category>
+    lateinit var onItemClick : (Category, Int) -> Unit
 
-    constructor(context: Context, categories: ArrayList<Categories>, onItemClick: (Categories, Int) -> Unit) : super() {
+    constructor(context: Context, categories: ArrayList<Category>, onItemClick: (Category, Int) -> Unit) : super() {
         this.context = context
         this.categories = categories
         this.onItemClick = onItemClick

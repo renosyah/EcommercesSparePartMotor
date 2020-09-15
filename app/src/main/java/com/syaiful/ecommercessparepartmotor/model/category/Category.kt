@@ -1,9 +1,9 @@
-package com.syaiful.ecommercessparepartmotor.model.categories
+package com.syaiful.ecommercessparepartmotor.model.category
 
 import com.google.gson.annotations.SerializedName
 import com.syaiful.ecommercessparepartmotor.model.BaseModel
 
-class Categories(
+class Category(
     @SerializedName("id")
     var id: Int = 0,
 
@@ -13,4 +13,12 @@ class Categories(
     @SerializedName("image_url")
     var imageUrl : String = ""
 
-) : BaseModel
+) : BaseModel {
+    fun clone() : Category {
+        return Category(
+            this.id,
+            this.name,
+            this.imageUrl
+        )
+    }
+}

@@ -3,14 +3,16 @@ package com.syaiful.ecommercessparepartmotor.ui.activity.home
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
-import com.syaiful.ecommercessparepartmotor.model.categories.Categories
+import com.syaiful.ecommercessparepartmotor.model.category.Category
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CategoriesAdapter
+import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
+import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
@@ -19,11 +21,14 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     @Inject
     lateinit var presenter: HomeActivityContract.Presenter
 
-    lateinit var context: Context
+    private lateinit var context: Context
 
-    val categories = ArrayList<Categories>()
-    lateinit var categoriesAdapter : CategoriesAdapter
+    private val categories = ArrayList<Category>()
+    private lateinit var categoriesAdapter : CategoriesAdapter
     private val reqCategories = RequestListModel()
+
+    lateinit var loading : LoadingLayout
+    lateinit var error : ErrorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +46,21 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         setQuery()
         setAdapter()
 
+        loading = LoadingLayout(context,loading_layout)
+        loading.setMessage(getString(R.string.loading_categories))
+        loading.hide()
+
+        error = ErrorLayout(context,error_layout) {
+            presenter.getAllCategory(reqCategories,true)
+        }
+        error.setMessage(getString(R.string.something_wrong))
+        error.hide()
+
         cart_menu_imageview.setOnClickListener {
 
         }
 
-        presenter.getAllCategories(reqCategories,true)
+        presenter.getAllCategory(reqCategories,true)
     }
 
     fun setQuery(){
@@ -57,32 +72,37 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     }
 
     fun setAdapter(){
-        categoriesAdapter = CategoriesAdapter(context,categories) { c, i -> }
+        categoriesAdapter = CategoriesAdapter(context,categories) { c, i ->
+
+        }
+        categories_recycleview.adapter = categoriesAdapter
         categories_recycleview.apply {
             layoutManager = GridLayoutManager(context, 2)
         }
-        categories_recycleview.adapter = categoriesAdapter
     }
 
-
-    override fun onEmptyCategories() {
-
+    override fun onEmptyGetAllCategory() {
+        if (reqCategories.offset == 0){
+            home_scrollview.visibility = View.GONE
+        }
     }
 
-    override fun onGetAllCategories(datas: ArrayList<Categories>) {
+    override fun onGetAllCategory(data: ArrayList<Category>) {
         if (reqCategories.offset == 0){
             categories.clear()
         }
-        categories.addAll(datas)
+        categories.addAll(data)
         categoriesAdapter.notifyDataSetChanged()
+        home_scrollview.visibility = View.VISIBLE
     }
 
-    override fun showProgressGetAllCategories(show: Boolean) {
-
+    override fun showProgressGetAllCategory(show: Boolean) {
+        loading.setVisibility(show)
     }
 
-    override fun showErrorGetAllCategories(error: String) {
-        Toast.makeText(context,error,Toast.LENGTH_LONG).show()
+    override fun showErrorGetAllCategory(e: String) {
+        home_scrollview.visibility = View.GONE
+        error.show()
     }
 
 
@@ -98,5 +118,4 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
 
         listcomponent.inject(this)
     }
-
 }

@@ -2,7 +2,7 @@ package com.syaiful.ecommercessparepartmotor.ui.activity.home
 
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.ResponseModel
-import com.syaiful.ecommercessparepartmotor.model.categories.Categories
+import com.syaiful.ecommercessparepartmotor.model.category.Category
 import com.syaiful.ecommercessparepartmotor.service.RetrofitService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -14,35 +14,35 @@ class HomeActivityPresenter : HomeActivityContract.Presenter {
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: HomeActivityContract.View
 
-    override fun getAllCategories(req : RequestListModel, enableLoading :Boolean) {
+    override fun getAllCategory(req : RequestListModel, enableLoading :Boolean) {
         if (enableLoading) {
-            view.showProgressGetAllCategories(true)
+            view.showProgressGetAllCategory(true)
         }
-        val subscribe = api.allCategories(req.clone())
+        val subscribe = api.allCategory(req.clone())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result: ResponseModel<ArrayList<Categories>>? ->
+            .subscribe({ result: ResponseModel<ArrayList<Category>>? ->
                 if (enableLoading) {
-                    view.showProgressGetAllCategories(false)
+                    view.showProgressGetAllCategory(false)
                 }
                 if (result != null) {
 
                     if (result.Error != null){
-                        view.showErrorGetAllCategories(result.Error!!)
+                        view.showErrorGetAllCategory(result.Error!!)
                     }
                     if (result.Data != null) {
-                        view.onGetAllCategories(result.Data!!)
+                        view.onGetAllCategory(result.Data!!)
                         if (result.Data!!.isEmpty()){
-                            view.onEmptyCategories()
+                            view.onEmptyGetAllCategory()
                         }
                     }
                 }
 
             }, { t: Throwable ->
                 if (enableLoading) {
-                    view.showProgressGetAllCategories(false)
+                    view.showProgressGetAllCategory(false)
                 }
-                view.showErrorGetAllCategories(t.message!!)
+                view.showErrorGetAllCategory(t.message!!)
             })
 
         subscriptions.add(subscribe)

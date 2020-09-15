@@ -3,11 +3,14 @@ package com.syaiful.ecommercessparepartmotor.model
 import com.google.gson.annotations.SerializedName
 
 class RequestListModel(
-    @SerializedName("customers_id")
-    var customersId: String = "",
+    @SerializedName("transaction_id")
+    var transactionId: String = "",
 
-    @SerializedName("categories_id")
-    var categoriesId: String = "",
+    @SerializedName("customer_id")
+    var customerId: String = "",
+
+    @SerializedName("category_id")
+    var categoryId: String = "",
 
     @SerializedName("search_by")
     var searchBy: String = "",
@@ -30,8 +33,9 @@ class RequestListModel(
 ) : BaseModel {
     fun clone() : RequestListModel {
         return RequestListModel(
-            this.customersId,
-            this.categoriesId,
+            this.transactionId,
+            this.customerId,
+            this.categoryId,
             this.searchBy,
             this.searchValue,
             this.orderBy,
