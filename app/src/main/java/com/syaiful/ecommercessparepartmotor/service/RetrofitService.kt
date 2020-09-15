@@ -4,7 +4,9 @@ import android.util.Log
 import com.syaiful.ecommercessparepartmotor.BuildConfig
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.ResponseModel
+import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.category.Category
+import com.syaiful.ecommercessparepartmotor.model.product.Product
 import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -23,6 +25,13 @@ interface RetrofitService {
     // add more end point to access
     @POST("api/category/list.php")
     fun allCategory(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Category>>>
+
+    @POST("api/product/list.php")
+    fun allProduct(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Product>>>
+
+    @POST("api/cart/add.php")
+    fun addCart(@Body cart : Cart): Observable<ResponseModel<String>>
+
 
     companion object {
 

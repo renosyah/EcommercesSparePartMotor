@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 class RequestListModel(
     @SerializedName("transaction_id")
-    var transactionId: String = "",
+    var transactionId: Int= 0,
 
     @SerializedName("customer_id")
-    var customerId: String = "",
+    var customerId: Int = 0,
 
     @SerializedName("category_id")
-    var categoryId: String = "",
+    var categoryId: Int= 0,
 
     @SerializedName("search_by")
     var searchBy: String = "",

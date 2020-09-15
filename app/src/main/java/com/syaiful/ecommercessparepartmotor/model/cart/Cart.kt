@@ -7,8 +7,8 @@ class Cart(
     @SerializedName("id")
     var id:Int = 0,
 
-    @SerializedName("category_id")
-    var categoryId : Int = 0,
+    @SerializedName("customer_id")
+    var customerId : Int = 0,
 
     @SerializedName("product_id")
     var productId : Int = 0,
@@ -26,7 +26,7 @@ class Cart(
     fun clone() : Cart {
         return Cart(
             this.id,
-            this.categoryId,
+            this.customerId,
             this.productId,
             this.quantity,
             this.price,

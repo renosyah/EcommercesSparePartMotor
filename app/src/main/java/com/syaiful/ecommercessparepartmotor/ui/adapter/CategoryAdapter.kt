@@ -5,13 +5,14 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.model.category.Category
 
-class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.Holder> {
+class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.Holder> {
 
     lateinit var context: Context
     lateinit var categories: ArrayList<Category>
@@ -22,7 +23,6 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.Holder> {
         this.categories = categories
         this.onItemClick = onItemClick
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder((context as Activity).layoutInflater.inflate(R.layout.adapter_categories,parent,false))
@@ -42,7 +42,7 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.Holder> {
 
         holder.name.text = item.name
 
-        holder.image.setOnClickListener {
+        holder.layout.setOnClickListener {
             onItemClick.invoke(item,position)
         }
     }
@@ -51,5 +51,6 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.Holder> {
     class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image : ImageView = itemView.findViewById(R.id.image_categories)
         val name : TextView = itemView.findViewById(R.id.name_categories)
+        val layout : LinearLayout = itemView.findViewById(R.id.layout)
     }
 }

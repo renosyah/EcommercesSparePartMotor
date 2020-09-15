@@ -5,4 +5,19 @@
     <string name="loading_categories">Memuat Produk...</string>
     <string name="something_wrong">Ups.., sepertinya ada yang salah!</string>
     <string name="try_again">Coba Lagi</string>
+    <string name="title_search_tips">Lebih Cepat...</string>
+    <string name="search_tips">Temukan barang yang kamu inginkan hanya dengan memasukkan kata kunci pada pencarian</string>
+    <string name="select_products">Daftar Produk</string>
+    <string name="loading_products">Memuat Produk...</string>
+    <string name="empty_product">Barang Tidak DItemukan</string>
+    <string name="empty_product_message">Barang yang dicari tidak ditemukan, silahkan masukkan kata kunci lainnya</string>
+    <string name="empty_category">Kategori Tidak DItemukan</string>
+    <string name="empty_category_message">Kategori yang dicari tidak ditemukan, silahkan masukkan kata kunci lainnya</string>
+    <string name="add_to_cart">Telah ditambahkan ke keranjang belanjaan</string>
+    <string name="detail_product">Detail Produk</string>
+    <string name="add_product_to_cart">Tambah Ke Keranjang</string>
+    <string name="cart">Keranjang</string>
+    <string name="empty_cart">Keranjang Kosong</string>
+    <string name="empty_cart_message">Keranjang anda kosong</string>
+
 </resources>

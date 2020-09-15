@@ -1,6 +1,7 @@
 package com.syaiful.ecommercessparepartmotor.ui.activity.home
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,11 +10,19 @@ import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
+import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.category.Category
-import com.syaiful.ecommercessparepartmotor.ui.adapter.CategoriesAdapter
+import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
+import com.syaiful.ecommercessparepartmotor.ui.activity.products.ProductsActivity
+import com.syaiful.ecommercessparepartmotor.ui.adapter.CategoryAdapter
+import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_home.cart_menu_imageview
+import kotlinx.android.synthetic.main.activity_home.error_layout
+import kotlinx.android.synthetic.main.activity_home.loading_layout
+import kotlinx.android.synthetic.main.activity_home.empty_layout
 import javax.inject.Inject
 
 class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
@@ -24,9 +33,10 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     private lateinit var context: Context
 
     private val categories = ArrayList<Category>()
-    private lateinit var categoriesAdapter : CategoriesAdapter
+    private lateinit var categoryAdapter : CategoryAdapter
     private val reqCategories = RequestListModel()
 
+    lateinit var emptyLayout: EmptyLayout
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
 
@@ -46,6 +56,10 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         setQuery()
         setAdapter()
 
+        emptyLayout = EmptyLayout(context,empty_layout)
+        emptyLayout.setMessageAndIcon(getString(R.string.empty_category),getString(R.string.empty_category_message),R.drawable.no_found)
+        emptyLayout.hide()
+
         loading = LoadingLayout(context,loading_layout)
         loading.setMessage(getString(R.string.loading_categories))
         loading.hide()
@@ -57,7 +71,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         error.hide()
 
         cart_menu_imageview.setOnClickListener {
-
+            startActivity(Intent(context, CartsActivity::class.java))
         }
 
         presenter.getAllCategory(reqCategories,true)
@@ -72,10 +86,12 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     }
 
     fun setAdapter(){
-        categoriesAdapter = CategoriesAdapter(context,categories) { c, i ->
-
+        categoryAdapter = CategoryAdapter(context,categories) { c,pos ->
+            val i = Intent(context, ProductsActivity::class.java)
+            i.putExtra("category",c)
+            startActivity(i)
         }
-        categories_recycleview.adapter = categoriesAdapter
+        categories_recycleview.adapter = categoryAdapter
         categories_recycleview.apply {
             layoutManager = GridLayoutManager(context, 2)
         }
@@ -83,7 +99,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
 
     override fun onEmptyGetAllCategory() {
         if (reqCategories.offset == 0){
-            home_scrollview.visibility = View.GONE
+            categories_recycleview.visibility = View.GONE
+            emptyLayout.show()
         }
     }
 
@@ -92,8 +109,10 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
             categories.clear()
         }
         categories.addAll(data)
-        categoriesAdapter.notifyDataSetChanged()
+        categoryAdapter.notifyDataSetChanged()
         home_scrollview.visibility = View.VISIBLE
+        categories_recycleview.visibility = View.VISIBLE
+        emptyLayout.hide()
     }
 
     override fun showProgressGetAllCategory(show: Boolean) {

@@ -33,8 +33,7 @@ android {
     buildTypes.each {
         it.minifyEnabled true
         it.buildConfigField "String", "SERVER_URL", "\"http://192.168.1.10:80/\""
-        it.resValue "string", "here_access_key_id", props.getProperty("here.access.key.id")
-        it.resValue "string", "here_access_key_secret", props.getProperty("here.access.key.secret")
+        it.buildConfigField "int","DEFAULT_CUSTOMER_ID","1"
     }
 
     buildTypes {
