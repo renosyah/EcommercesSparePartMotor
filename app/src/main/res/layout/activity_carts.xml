@@ -74,6 +74,82 @@
             android:layout_height="match_parent"
             tools:visibility="gone" />
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/checkout_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_margin="15dp"
+            app:cardCornerRadius="20dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/textColorWhite"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:gravity="left|center"
+                    android:text="@string/total"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/total_checkout_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    android:text="Rp 6000"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/checkout_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/rounded_shape_3"
+                    android:minHeight="60dp"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="40dp"
+                    android:text="@string/buy"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    tools:visibility="visible" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <Button
+            android:id="@+id/go_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:background="@drawable/rounded_shape_2"
+            android:minHeight="60dp"
+            android:paddingStart="80dp"
+            android:paddingEnd="80dp"
+            android:text="@string/shoping_now"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            tools:visibility="gone" />
+
     </FrameLayout>
 
 </LinearLayout>

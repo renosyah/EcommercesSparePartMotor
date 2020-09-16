@@ -19,5 +19,12 @@
     <string name="cart">Keranjang</string>
     <string name="empty_cart">Keranjang Kosong</string>
     <string name="empty_cart_message">Keranjang anda kosong</string>
+    <string name="shoping_now">Belanja Sekarang</string>
+    <string name="buy">Beli</string>
+    <string name="total">Total</string>
+    <string name="search">Pencarian</string>
+    <string name="address_send">Alamat Pengiriman</string>
+    <string name="checkout">Checkout</string>
+    <string name="enter_address">Inputkan alamat anda...</string>
 
 </resources>

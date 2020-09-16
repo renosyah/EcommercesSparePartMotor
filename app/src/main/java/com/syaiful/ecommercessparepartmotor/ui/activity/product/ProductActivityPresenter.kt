@@ -14,7 +14,7 @@ class ProductActivityPresenter : ProductActivityContract.Presenter {
     private val api: RetrofitService = RetrofitService.create()
     private lateinit var view: ProductActivityContract.View
 
-    override fun getAddToCart(cart: Cart, enableLoading: Boolean) {
+    override fun addToCart(cart: Cart, enableLoading: Boolean) {
         if (enableLoading) {
             view.showProgressAddToCart(true)
         }

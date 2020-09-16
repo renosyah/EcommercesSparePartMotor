@@ -1,11 +1,11 @@
-package com.syaiful.ecommercessparepartmotor.ui.activity.products
+package com.syaiful.ecommercessparepartmotor.ui.activity.search
 
 import com.syaiful.ecommercessparepartmotor.base.BaseContract
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 
-class ProductsActivityContract {
+class SearchResultActivityContract {
     interface View: BaseContract.View {
 
         // add more for request

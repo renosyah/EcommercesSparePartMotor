@@ -32,32 +32,26 @@ interface RetrofitService {
     @POST("api/cart/add.php")
     fun addCart(@Body cart : Cart): Observable<ResponseModel<String>>
 
+    @POST("api/cart/list_detail.php")
+    fun allCart(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Cart>>>
+
+    @POST("api/cart/update.php")
+    fun updateCart(@Body cart : Cart): Observable<ResponseModel<String>>
+
+    @POST("api/cart/delete.php")
+    fun deleteCart(@Body cart : Cart): Observable<ResponseModel<String>>
+
+    @POST("api/cart/total.php")
+    fun getTotal(@Body cart : Cart): Observable<ResponseModel<Int>>
 
     companion object {
 
         fun create() : RetrofitService {
 
-            val client = OkHttpClient.Builder()
-                .addInterceptor(object : Interceptor{
-                    override fun intercept(chain: Interceptor.Chain): Response {
-//                        try {
-//                            val buffer = Buffer()
-//                            chain.request().body()!!.writeTo(buffer)
-//                            Log.e("body", buffer.readUtf8())
-//
-//                        } catch (ignore: IOException) { }
-
-                        return chain.proceed(chain.request())
-                    }
-
-                })
-                .build()
-
             val retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(BuildConfig.SERVER_URL)
-                .client(client)
                 .build()
 
             return retrofit.create(RetrofitService::class.java)

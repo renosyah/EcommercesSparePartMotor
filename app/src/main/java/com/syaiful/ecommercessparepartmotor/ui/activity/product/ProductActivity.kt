@@ -82,7 +82,7 @@ class ProductActivity : AppCompatActivity(),ProductActivityContract.View {
                 0, BuildConfig.DEFAULT_CUSTOMER_ID, product.id,
                 1, product.price, product.price
             )
-            presenter.getAddToCart(cart,true)
+            presenter.addToCart(cart,true)
         }
 
         back_imageview.setOnClickListener {

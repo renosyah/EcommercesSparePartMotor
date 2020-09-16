@@ -2,6 +2,7 @@ package com.syaiful.ecommercessparepartmotor.model.cart
 
 import com.google.gson.annotations.SerializedName
 import com.syaiful.ecommercessparepartmotor.model.BaseModel
+import com.syaiful.ecommercessparepartmotor.model.product.Product
 
 class Cart(
     @SerializedName("id")
@@ -20,9 +21,17 @@ class Cart(
     var price : Int = 0,
 
     @SerializedName("sub_total")
-    var subTotal : Int = 0
+    var subTotal : Int = 0,
+
+    @SerializedName("product")
+    var product : Product = Product()
 
 ) : BaseModel {
+
+    constructor(customerId : Int) : this() {
+        this.customerId = customerId
+    }
+
     fun clone() : Cart {
         return Cart(
             this.id,
@@ -30,7 +39,8 @@ class Cart(
             this.productId,
             this.quantity,
             this.price,
-            this.subTotal
+            this.subTotal,
+            Product()
         )
     }
 }

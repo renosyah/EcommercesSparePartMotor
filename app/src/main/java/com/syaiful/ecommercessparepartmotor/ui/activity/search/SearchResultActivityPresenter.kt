@@ -1,21 +1,19 @@
-package com.syaiful.ecommercessparepartmotor.ui.activity.products
+package com.syaiful.ecommercessparepartmotor.ui.activity.search
 
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.ResponseModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
-import com.syaiful.ecommercessparepartmotor.model.category.Category
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.service.RetrofitService
-import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivityContract
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ProductsActivityPresenter : ProductsActivityContract.Presenter {
+class SearchResultActivityPresenter : SearchResultActivityContract.Presenter {
 
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
-    private lateinit var view: ProductsActivityContract.View
+    private lateinit var view: SearchResultActivityContract.View
 
     override fun getAllProduct(req: RequestListModel, enableLoading: Boolean) {
         if (enableLoading) {
@@ -91,7 +89,7 @@ class ProductsActivityPresenter : ProductsActivityContract.Presenter {
         subscriptions.clear()
     }
 
-    override fun attach(view: ProductsActivityContract.View) {
+    override fun attach(view: SearchResultActivityContract.View) {
        this.view = view
     }
 

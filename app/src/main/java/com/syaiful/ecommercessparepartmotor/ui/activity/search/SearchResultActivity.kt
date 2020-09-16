@@ -1,10 +1,8 @@
-package com.syaiful.ecommercessparepartmotor.ui.activity.products
+package com.syaiful.ecommercessparepartmotor.ui.activity.search
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,32 +13,26 @@ import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
-import com.syaiful.ecommercessparepartmotor.model.category.Category
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivity
-import com.syaiful.ecommercessparepartmotor.ui.activity.search.SearchResultActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.ProductAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
-import kotlinx.android.synthetic.main.activity_products.*
-import kotlinx.android.synthetic.main.activity_products.error_layout
-import kotlinx.android.synthetic.main.activity_products.loading_layout
+import kotlinx.android.synthetic.main.activity_search_result.*
 import javax.inject.Inject
 
-
-class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
+class SearchResultActivity : AppCompatActivity(), SearchResultActivityContract.View {
 
     @Inject
-    lateinit var presenter: ProductsActivityContract.Presenter
+    lateinit var presenter: SearchResultActivityContract.Presenter
 
     private lateinit var context: Context
 
     private val products = ArrayList<Product>()
     private lateinit var productAdapter : ProductAdapter
-    private val reqProducts = RequestListModel()
-    private lateinit var category : Category
+    lateinit var reqProducts : RequestListModel
 
     lateinit var emptyLayout: EmptyLayout
     lateinit var loading : LoadingLayout
@@ -48,23 +40,21 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_products)
+        setContentView(R.layout.activity_search_result)
         initWidget()
     }
 
     private fun initWidget() {
-        this.context = this@ProductsActivity
+        this.context = this@SearchResultActivity
 
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
 
-        if (intent.hasExtra("category")){
-            category = intent.getSerializableExtra("category") as Category
-            title_category_textview.text = category.name
+        if (intent.hasExtra("request_products")) {
+            reqProducts = intent.getSerializableExtra("request_products") as RequestListModel
         }
 
-        setQuery()
         setAdapter()
 
         emptyLayout = EmptyLayout(context,empty_layout)
@@ -81,31 +71,14 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
         error.setMessage(getString(R.string.something_wrong))
         error.hide()
 
-        search_button_imageview.setOnClickListener {
-            reqProducts.searchValue = search_text_edittext.text.toString()
-
-            val i = Intent(context,SearchResultActivity::class.java)
-            i.putExtra("request_products",reqProducts)
-            startActivity(i)
-        }
-
-        cart_menu_imageview.setOnClickListener {
-            startActivity(Intent(context, CartsActivity::class.java))
-        }
         back_imageview.setOnClickListener {
             finish()
         }
+        cart_menu_imageview.setOnClickListener {
+            startActivity(Intent(context, CartsActivity::class.java))
+        }
 
         presenter.getAllProduct(reqProducts,true)
-    }
-
-    fun setQuery(){
-        reqProducts.categoryId = category.id
-        reqProducts.searchBy = "name"
-        reqProducts.orderBy = "name"
-        reqProducts.orderDir = "asc"
-        reqProducts.offset = 0
-        reqProducts.limit = 10
     }
 
     fun setAdapter(){
@@ -123,7 +96,7 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
         }
         products_recycleview.adapter = productAdapter
         products_recycleview.apply {
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         }
     }
 
@@ -140,18 +113,17 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
         }
         products.addAll(data)
         productAdapter.notifyDataSetChanged()
-        products_scrollview.visibility = View.VISIBLE
         products_recycleview.visibility = View.VISIBLE
         emptyLayout.hide()
     }
 
     override fun showProgressGetAllProduct(show: Boolean) {
         loading.setVisibility(show)
-        products_scrollview.visibility = if (show) View.GONE else View.VISIBLE
+        products_recycleview.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetAllProduct(e: String) {
-        products_scrollview.visibility = View.GONE
+        products_recycleview.visibility = View.GONE
         error.show()
     }
 
@@ -161,11 +133,11 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
 
     override fun showProgressAddToCart(show: Boolean) {
         loading.setVisibility(show)
-        products_scrollview.visibility = if (show) View.GONE else View.VISIBLE
+        products_recycleview.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorAddToCart(e: String) {
-        products_scrollview.visibility = View.GONE
+        products_recycleview.visibility = View.GONE
         error.show()
     }
 

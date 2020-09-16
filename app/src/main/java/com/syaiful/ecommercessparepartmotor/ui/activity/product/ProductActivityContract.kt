@@ -15,6 +15,6 @@ class ProductActivityContract {
     interface Presenter: BaseContract.Presenter<View> {
 
         // add for request
-        fun getAddToCart(cart : Cart, enableLoading :Boolean)
+        fun addToCart(cart : Cart, enableLoading :Boolean)
     }
 }

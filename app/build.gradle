@@ -17,18 +17,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    applicationVariants.all {
-        it.mergedFlavor.resourceConfigurations.clear()
-        it.mergedFlavor.resourceConfigurations.add("in")
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
-    def props = new Properties()
-    file("../credentials.properties").withInputStream { props.load(it) }
 
     buildTypes.each {
         it.minifyEnabled true

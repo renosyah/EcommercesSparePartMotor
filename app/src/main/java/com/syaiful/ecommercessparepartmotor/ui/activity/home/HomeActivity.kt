@@ -117,6 +117,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
 
     override fun showProgressGetAllCategory(show: Boolean) {
         loading.setVisibility(show)
+        home_scrollview.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetAllCategory(e: String) {
