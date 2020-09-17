@@ -26,5 +26,13 @@
     <string name="address_send">Alamat Pengiriman</string>
     <string name="checkout">Checkout</string>
     <string name="enter_address">Inputkan alamat anda...</string>
+    <string name="total_price">Total Harga</string>
+    <string name="shipment_fee">Ongkos Kirim</string>
+    <string name="total_pay">Total Bayar</string>
+    <string name="make_payment">Buat Pembayaran</string>
+    <string name="choose_payment">Pilih metode pembayaran</string>
+    <string name="product_name">Nama Barang</string>
+    <string name="buy_quantity">Jumlah Pembelian</string>
+    <string name="select_payment">Pilih metode Pembayaran</string>
 
 </resources>

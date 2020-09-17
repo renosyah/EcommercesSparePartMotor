@@ -5,6 +5,8 @@ import android.app.Activity
 import com.syaiful.ecommercessparepartmotor.service.RetrofitService
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivityContract
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivityPresenter
+import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivityContract
+import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivityPresenter
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivityContract
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivityPresenter
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivityContract
@@ -50,5 +52,10 @@ class ActivityModule(private var activity : Activity) {
     @Provides
     fun provideSearchResultActivityPresenter(): SearchResultActivityContract.Presenter {
         return SearchResultActivityPresenter()
+    }
+
+    @Provides
+    fun provideCheckoutActivityPresenter(): CheckoutActivityContract.Presenter {
+        return CheckoutActivityPresenter()
     }
 }

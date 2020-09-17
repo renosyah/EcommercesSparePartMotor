@@ -2,6 +2,8 @@ package com.syaiful.ecommercessparepartmotor.di.component
 
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
+import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivity
+import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivityContract
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivityContract
@@ -18,4 +20,5 @@ interface ActivityComponent {
     fun inject(productActivity: ProductActivity)
     fun inject(cartsActivity: CartsActivity)
     fun inject(searchResultActivity: SearchResultActivity)
+    fun inject(checkoutActivity: CheckoutActivity)
 }

@@ -1,17 +1,19 @@
-package com.syaiful.ecommercessparepartmotor.ui.activity.carts
+package com.syaiful.ecommercessparepartmotor.ui.activity.checkout
 
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.ResponseModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
+import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.service.RetrofitService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class CartsActivityPresenter : CartsActivityContract.Presenter {
+class CheckoutActivityPresenter : CheckoutActivityContract.Presenter {
+
     private val subscriptions = CompositeDisposable()
     private val api: RetrofitService = RetrofitService.create()
-    private lateinit var view: CartsActivityContract.View
+    private lateinit var view: CheckoutActivityContract.View
 
     override fun getAllCart(req: RequestListModel, enableLoading: Boolean) {
         if (enableLoading) {
@@ -47,6 +49,40 @@ class CartsActivityPresenter : CartsActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
+    override fun getAllPayment(req: RequestListModel, enableLoading: Boolean) {
+        if (enableLoading) {
+            view.showProgressGetAllPayment(true)
+        }
+        val subscribe = api.allPayment(req.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<ArrayList<Payment>>? ->
+                if (enableLoading) {
+                    view.showProgressGetAllPayment(false)
+                }
+                if (result != null) {
+
+                    if (result.Error != null){
+                        view.showErrorGetAllPayment(result.Error!!)
+                    }
+                    if (result.Data != null) {
+                        view.onGetAllPayment(result.Data!!)
+                        if (result.Data!!.isEmpty()){
+                            view.onEmptyGetAllPayment()
+                        }
+                    }
+                }
+
+            }, { t: Throwable ->
+                if (enableLoading) {
+                    view.showProgressGetAllPayment(false)
+                }
+                view.showErrorGetAllPayment(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
+
     override fun getTotal(cart: Cart) {
         val subscribe = api.getTotal(cart.clone())
             .subscribeOn(Schedulers.io())
@@ -70,68 +106,6 @@ class CartsActivityPresenter : CartsActivityContract.Presenter {
         subscriptions.add(subscribe)
     }
 
-    override fun updateCart(cart: Cart, enableLoading: Boolean) {
-        if (enableLoading) {
-            view.showProgressUpdateCart(true)
-        }
-        val subscribe = api.updateCart(cart.clone())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result: ResponseModel<String>? ->
-                if (enableLoading) {
-                    view.showProgressUpdateCart(false)
-                }
-                if (result != null) {
-
-                    if (result.Error != null){
-                        view.showErrorUpdateCart(result.Error!!)
-                    }
-                    if (result.Data != "") {
-                        view.onUpdateCart()
-                    }
-                }
-
-            }, { t: Throwable ->
-                if (enableLoading) {
-                    view.showProgressUpdateCart(false)
-                }
-                view.showErrorUpdateCart(t.message!!)
-            })
-
-        subscriptions.add(subscribe)
-    }
-
-    override fun deleteCart(cart: Cart, enableLoading: Boolean) {
-        if (enableLoading) {
-            view.showProgressDeleteCart(true)
-        }
-        val subscribe = api.deleteCart(cart.clone())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result: ResponseModel<String>? ->
-                if (enableLoading) {
-                    view.showProgressDeleteCart(false)
-                }
-                if (result != null) {
-
-                    if (result.Error != null){
-                        view.showErrorDeleteCart(result.Error!!)
-                    }
-                    if (result.Data != "") {
-                        view.onDeleteCart()
-                    }
-                }
-
-            }, { t: Throwable ->
-                if (enableLoading) {
-                    view.showProgressDeleteCart(false)
-                }
-                view.showErrorDeleteCart(t.message!!)
-            })
-
-        subscriptions.add(subscribe)
-    }
-
     override fun subscribe() {
 
     }
@@ -140,7 +114,7 @@ class CartsActivityPresenter : CartsActivityContract.Presenter {
         subscriptions.clear()
     }
 
-    override fun attach(view: CartsActivityContract.View) {
+    override fun attach(view: CheckoutActivityContract.View) {
         this.view = view
     }
 

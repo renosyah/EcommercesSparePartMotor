@@ -67,7 +67,8 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         loading.hide()
 
         error = ErrorLayout(context,error_layout) {
-
+            finish()
+            startActivity(intent)
         }
         error.setMessage(getString(R.string.something_wrong))
         error.hide()

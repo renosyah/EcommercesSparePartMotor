@@ -27,7 +27,7 @@
             android:gravity="center"
             android:text="oops something wrong happend"
             android:textAlignment="center"
-            android:textColor="@android:color/holo_red_light"
+            android:textColor="@color/textColorRed"
             android:textSize="18sp" />
 
         <TextView
