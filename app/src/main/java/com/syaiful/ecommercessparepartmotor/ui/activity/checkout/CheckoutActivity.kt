@@ -4,25 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.syaiful.ecommercessparepartmotor.BuildConfig
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.ui.activity.transaction.TransactionActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CheckoutItemAdapter
 import com.syaiful.ecommercessparepartmotor.ui.dialog.ChoosePaymentDialog
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_checkout.*
-import kotlinx.android.synthetic.main.activity_checkout.loading_layout
-import kotlinx.android.synthetic.main.activity_checkout.error_layout
 import javax.inject.Inject
 
 class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
@@ -31,6 +29,7 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     lateinit var presenter: CheckoutActivityContract.Presenter
 
     private lateinit var context: Context
+    private var customer : Customer = Customer()
 
     private val carts = ArrayList<Cart>()
     private lateinit var checkoutItemAdapter: CheckoutItemAdapter
@@ -57,9 +56,14 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
         presenter.attach(this)
         presenter.subscribe()
 
+
         if (intent.hasExtra("checkout_data")){
             checkoutData = intent.getSerializableExtra("checkout_data") as Checkout
             address_textview.text = checkoutData.address
+        }
+
+        if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
+            this.customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
         }
 
         setQuery()
@@ -116,7 +120,7 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     }
 
     fun setQuery(){
-        reqCarts.customerId = BuildConfig.DEFAULT_CUSTOMER_ID
+        reqCarts.customerId = customer.id
         reqCarts.searchBy = "product_id"
         reqCarts.orderBy = "product_id"
         reqCarts.orderDir = "asc"
@@ -148,7 +152,7 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
         }
         carts.addAll(data)
         checkoutItemAdapter.notifyDataSetChanged()
-        presenter.getTotal(Cart(BuildConfig.DEFAULT_CUSTOMER_ID))
+        presenter.getTotal(Cart(customer.id))
     }
 
     override fun showProgressGetAllCart(show: Boolean) {
@@ -184,9 +188,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     }
 
     override fun onGetTotal(total: Int) {
-        total_textview.text = "Rp. ${total}"
-        shipment_fee_textview.text = "Rp. 5000"
-        total_pay_textview.text = "Rp. ${total + 5000}"
+        total_textview.text = "Rp. $total"
+        total_pay_textview.text = "Rp. $total"
     }
 
     override fun showErrorGetTotal(e: String) {

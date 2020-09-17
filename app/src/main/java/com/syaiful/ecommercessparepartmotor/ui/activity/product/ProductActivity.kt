@@ -13,10 +13,12 @@ import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_product.*
 import kotlinx.android.synthetic.main.activity_product.back_imageview
 import kotlinx.android.synthetic.main.activity_product.cart_menu_imageview
@@ -30,6 +32,8 @@ class ProductActivity : AppCompatActivity(),ProductActivityContract.View {
     lateinit var presenter: ProductActivityContract.Presenter
 
     private lateinit var context: Context
+    private var customer : Customer = Customer()
+
     private lateinit var product : Product
 
     lateinit var loading : LoadingLayout
@@ -63,6 +67,10 @@ class ProductActivity : AppCompatActivity(),ProductActivityContract.View {
                 .into(product_image_view)
         }
 
+        if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
+            this.customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
+        }
+
         loading = LoadingLayout(context,loading_layout)
         loading.setMessage(getString(R.string.loading_products))
         loading.hide()
@@ -79,7 +87,7 @@ class ProductActivity : AppCompatActivity(),ProductActivityContract.View {
 
         add_product_to_cart_button.setOnClickListener {
             val cart = Cart(
-                0, BuildConfig.DEFAULT_CUSTOMER_ID, product.id,
+                0, customer.id, product.id,
                 1, product.price, product.price
             )
             presenter.addToCart(cart,true)

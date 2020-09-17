@@ -12,12 +12,14 @@ import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.category.Category
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.products.ProductsActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CategoryAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_home.cart_menu_imageview
 import kotlinx.android.synthetic.main.activity_home.error_layout
@@ -52,6 +54,12 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        if (SerializableSave(context,SerializableSave.userDataFileSessionName).load() == null){
+            SerializableSave(context,SerializableSave.userDataFileSessionName).save(
+                Customer(1,"ipul","ipul","ipul@gmail.com","123")
+            )
+        }
 
         setQuery()
         setAdapter()

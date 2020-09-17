@@ -16,6 +16,7 @@ import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.category.Category
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivity
@@ -24,6 +25,7 @@ import com.syaiful.ecommercessparepartmotor.ui.adapter.ProductAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.activity_products.error_layout
 import kotlinx.android.synthetic.main.activity_products.loading_layout
@@ -36,6 +38,7 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
     lateinit var presenter: ProductsActivityContract.Presenter
 
     private lateinit var context: Context
+    private var customer : Customer = Customer()
 
     private val products = ArrayList<Product>()
     private lateinit var productAdapter : ProductAdapter
@@ -62,6 +65,10 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
         if (intent.hasExtra("category")){
             category = intent.getSerializableExtra("category") as Category
             title_category_textview.text = category.name
+        }
+
+        if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
+            this.customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
         }
 
         setQuery()
@@ -116,7 +123,7 @@ class ProductsActivity : AppCompatActivity(),ProductsActivityContract.View {
         }
         productAdapter.setOnCartClick { product, i ->
             val cart = Cart(
-                0, BuildConfig.DEFAULT_CUSTOMER_ID, product.id,
+                0, customer.id, product.id,
                 1, product.price, product.price
             )
             presenter.addToCart(cart,true)

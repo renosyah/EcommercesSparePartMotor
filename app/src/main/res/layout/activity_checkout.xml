@@ -154,34 +154,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="left|center"
-                            android:text="@string/shipment_fee"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/shipment_fee_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right|center"
-                            android:text="Rp 0"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="18sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="left|center"
                             android:text="@string/total_pay"
                             android:textColor="@color/colorPrimary"
                             android:textSize="16sp"

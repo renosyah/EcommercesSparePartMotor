@@ -29,6 +29,8 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     private lateinit var context: Context
     private var refId : String = ""
 
+    lateinit var timer : CountDownTimer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction)
@@ -54,7 +56,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     }
 
     private fun startCountDown(minute : Long){
-        val timer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minute), TimeUnit.SECONDS.toMillis(1L)) {
+         timer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minute), TimeUnit.SECONDS.toMillis(1L)) {
             override fun onTick(milis: Long) {
                 val min = TimeUnit.MILLISECONDS.toMinutes(milis)
                 val sec = TimeUnit.MILLISECONDS.toSeconds(milis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milis))
@@ -67,6 +69,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
 
         }
         timer.start()
+
     }
 
     private fun copyAccountNumber(){
@@ -88,7 +91,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     }
 
     override fun onGetOneTransactionByRef(transaction: Transaction) {
-        total_payment_textview.text = "Rp ${transaction.total + transaction.shipmentFee}"
+        total_payment_textview.text = "Rp ${transaction.total}"
         presenter.getOnePayment(Payment(transaction.paymentId),true)
     }
 
@@ -120,6 +123,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
+        timer.onFinish()
     }
 
     private fun injectDependency(){

@@ -24,8 +24,8 @@ android {
 
     buildTypes.each {
         it.minifyEnabled true
-        it.buildConfigField "String", "SERVER_URL", "\"http://192.168.100.81:80/\""
-        it.buildConfigField "int","DEFAULT_CUSTOMER_ID","1"
+        it.buildConfigField "String", "SERVER_URL", "\"http://192.168.1.10:80/\""
+        it.buildConfigField "int","DEFAULT_LIMIT","100"
     }
 
     buildTypes {
@@ -73,9 +73,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
-
-    // toasty
-
 
 }
 kapt {

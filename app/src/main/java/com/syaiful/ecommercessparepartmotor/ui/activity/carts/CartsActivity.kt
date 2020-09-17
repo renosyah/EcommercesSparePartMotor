@@ -13,12 +13,14 @@ import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.setAddress.SetAddressActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CartAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_carts.*
 import kotlinx.android.synthetic.main.activity_carts.back_imageview
 import kotlinx.android.synthetic.main.activity_carts.empty_layout
@@ -34,6 +36,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
     lateinit var presenter: CartsActivityContract.Presenter
 
     private lateinit var context: Context
+    private var customer : Customer = Customer()
 
     private val carts = ArrayList<Cart>()
     private lateinit var cartAdapter: CartAdapter
@@ -57,6 +60,10 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        if (SerializableSave(context,SerializableSave.userDataFileSessionName).load() != null){
+            this.customer = SerializableSave(context,SerializableSave.userDataFileSessionName).load() as Customer
+        }
 
         prepareCheckoutData()
         setQuery()
@@ -97,14 +104,14 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
     }
 
     fun prepareCheckoutData(){
-        checkoutData.customerId = BuildConfig.DEFAULT_CUSTOMER_ID
+        checkoutData.customerId = customer.id
         checkoutData.address = ""
         checkoutData.paymentId = 0
         checkoutData.total = 0
     }
 
     fun setQuery(){
-        reqCarts.customerId = BuildConfig.DEFAULT_CUSTOMER_ID
+        reqCarts.customerId = customer.id
         reqCarts.searchBy = "product_id"
         reqCarts.orderBy = "product_id"
         reqCarts.orderDir = "asc"
@@ -153,7 +160,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         checkout_layout.visibility = View.VISIBLE
         emptyLayout.hide()
 
-        presenter.getTotal(Cart(BuildConfig.DEFAULT_CUSTOMER_ID))
+        presenter.getTotal(Cart(customer.id))
     }
 
     override fun showProgressGetAllCart(show: Boolean) {

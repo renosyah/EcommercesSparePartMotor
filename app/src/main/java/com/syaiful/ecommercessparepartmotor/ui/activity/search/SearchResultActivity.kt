@@ -13,6 +13,7 @@ import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivity
@@ -20,6 +21,7 @@ import com.syaiful.ecommercessparepartmotor.ui.adapter.ProductAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_search_result.*
 import javax.inject.Inject
 
@@ -29,6 +31,7 @@ class SearchResultActivity : AppCompatActivity(), SearchResultActivityContract.V
     lateinit var presenter: SearchResultActivityContract.Presenter
 
     private lateinit var context: Context
+    private var customer : Customer = Customer()
 
     private val products = ArrayList<Product>()
     private lateinit var productAdapter : ProductAdapter
@@ -53,6 +56,10 @@ class SearchResultActivity : AppCompatActivity(), SearchResultActivityContract.V
 
         if (intent.hasExtra("request_products")) {
             reqProducts = intent.getSerializableExtra("request_products") as RequestListModel
+        }
+
+        if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
+            this.customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
         }
 
         setAdapter()
@@ -89,7 +96,7 @@ class SearchResultActivity : AppCompatActivity(), SearchResultActivityContract.V
         }
         productAdapter.setOnCartClick { product, i ->
             val cart = Cart(
-                0, BuildConfig.DEFAULT_CUSTOMER_ID, product.id,
+                0,customer.id, product.id,
                 1, product.price, product.price
             )
             presenter.addToCart(cart,true)
