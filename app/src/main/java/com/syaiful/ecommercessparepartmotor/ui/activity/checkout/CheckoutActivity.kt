@@ -19,9 +19,10 @@ import com.syaiful.ecommercessparepartmotor.ui.activity.transaction.TransactionA
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CheckoutItemAdapter
 import com.syaiful.ecommercessparepartmotor.ui.dialog.ChoosePaymentDialog
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
+import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
 import kotlinx.android.synthetic.main.activity_checkout.*
+import kotlinx.android.synthetic.main.activity_checkout.loading_layout
 import kotlinx.android.synthetic.main.activity_checkout.error_layout
-import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
 class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
@@ -40,6 +41,7 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     private val payments = ArrayList<Payment>()
     private val reqPayment = RequestListModel()
 
+    lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +64,10 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
 
         setQuery()
         setAdapter()
+
+        loading = LoadingLayout(context,loading_layout)
+        loading.setMessage(getString(R.string.loading_data))
+        loading.hide()
 
         error = ErrorLayout(context,error_layout) {
             finish()
@@ -146,7 +152,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     }
 
     override fun showProgressGetAllCart(show: Boolean) {
-
+        loading.setVisibility(show)
+        checkout_main_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetAllCart(e: String) {
@@ -167,7 +174,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     }
 
     override fun showProgressGetAllPayment(show: Boolean) {
-
+        loading.setVisibility(show)
+        checkout_main_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetAllPayment(e: String) {
@@ -194,7 +202,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     }
 
     override fun showProgressCheckout(show: Boolean) {
-
+        loading.setVisibility(show)
+        checkout_main_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorCheckout(e: String) {

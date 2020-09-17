@@ -63,7 +63,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         setAdapter()
 
         emptyLayout = EmptyLayout(context,empty_layout)
-        emptyLayout.setMessageAndIcon(getString(R.string.empty_cart),getString(R.string.empty_cart_message),R.drawable.no_found)
+        emptyLayout.setMessageAndIcon(getString(R.string.empty_cart),getString(R.string.empty_cart_message),R.drawable.empty_cart)
         emptyLayout.hide()
 
         loading = LoadingLayout(context,loading_layout)

@@ -18,7 +18,7 @@
     <string name="add_product_to_cart">Tambah Ke Keranjang</string>
     <string name="cart">Keranjang</string>
     <string name="empty_cart">Keranjang Kosong</string>
-    <string name="empty_cart_message">Keranjang anda kosong</string>
+    <string name="empty_cart_message">Keranjang anda masih kosong. silahkan pilih barang yang ingin dibeli</string>
     <string name="shoping_now">Belanja Sekarang</string>
     <string name="buy">Beli</string>
     <string name="total">Total</string>
@@ -38,5 +38,6 @@
     <string name="account_number">No. Rekening</string>
     <string name="payment_remain">Sisa waktu pembayaran</string>
     <string name="copied">Berhasil Disalin</string>
+    <string name="loading_data">Memuat data...</string>
 
 </resources>

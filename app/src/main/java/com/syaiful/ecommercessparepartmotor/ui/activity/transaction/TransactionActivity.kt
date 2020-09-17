@@ -81,7 +81,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
         val layout: View = inflater.inflate(R.layout.toast_copied, null)
 
         val toast = Toast(context)
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+        toast.setGravity(Gravity.BOTTOM, 0, 0)
         toast.duration = Toast.LENGTH_LONG
         toast.view = layout
         toast.show()
