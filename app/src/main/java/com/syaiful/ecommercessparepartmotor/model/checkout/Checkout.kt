@@ -18,8 +18,6 @@ class Checkout (
 
 ) : BaseModel {
 
-    constructor() : this(0,0,"",0)
-
     fun clone() : Checkout {
         return Checkout(
             this.customerId,

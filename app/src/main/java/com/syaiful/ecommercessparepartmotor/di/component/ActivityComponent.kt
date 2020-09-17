@@ -10,6 +10,8 @@ import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivityC
 import com.syaiful.ecommercessparepartmotor.ui.activity.products.ProductsActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.search.SearchResultActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.search.SearchResultActivityPresenter
+import com.syaiful.ecommercessparepartmotor.ui.activity.transaction.TransactionActivity
+import com.syaiful.ecommercessparepartmotor.ui.activity.transaction.TransactionActivityContract
 import dagger.Component
 
 @Component(modules = arrayOf(ActivityModule::class))
@@ -21,4 +23,5 @@ interface ActivityComponent {
     fun inject(cartsActivity: CartsActivity)
     fun inject(searchResultActivity: SearchResultActivity)
     fun inject(checkoutActivity: CheckoutActivity)
+    fun inject(transactionActivity: TransactionActivity)
 }

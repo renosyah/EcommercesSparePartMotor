@@ -34,5 +34,9 @@
     <string name="product_name">Nama Barang</string>
     <string name="buy_quantity">Jumlah Pembelian</string>
     <string name="select_payment">Pilih metode Pembayaran</string>
+    <string name="transaction">Pembayaran</string>
+    <string name="account_number">No. Rekening</string>
+    <string name="payment_remain">Sisa waktu pembayaran</string>
+    <string name="copied">Berhasil Disalin</string>
 
 </resources>

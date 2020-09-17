@@ -6,8 +6,10 @@ import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.ResponseModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.category.Category
+import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.model.product.Product
+import com.syaiful.ecommercessparepartmotor.model.transaction.Transaction
 import io.reactivex.Observable
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -33,6 +35,9 @@ interface RetrofitService {
     @POST("api/payment/list.php")
     fun allPayment(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Payment>>>
 
+    @POST("api/payment/one.php")
+    fun onePayment(@Body payment: Payment): Observable<ResponseModel<Payment>>
+
     @POST("api/cart/add.php")
     fun addCart(@Body cart : Cart): Observable<ResponseModel<String>>
 
@@ -47,6 +52,12 @@ interface RetrofitService {
 
     @POST("api/cart/total.php")
     fun getTotal(@Body cart : Cart): Observable<ResponseModel<Int>>
+
+    @POST("api/transaction/one_by_ref.php")
+    fun oneTransactionByRef(@Body transaction: Transaction): Observable<ResponseModel<Transaction>>
+
+    @POST("api/checkout/add.php")
+    fun checkout(@Body checkout: Checkout): Observable<ResponseModel<String>>
 
     companion object {
 

@@ -12,6 +12,7 @@ import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
+import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.setAddress.SetAddressActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CartAdapter
@@ -38,6 +39,8 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
     private lateinit var cartAdapter: CartAdapter
     private val reqCarts = RequestListModel()
 
+    private val checkoutData = Checkout()
+
     lateinit var emptyLayout: EmptyLayout
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
@@ -55,6 +58,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         presenter.attach(this)
         presenter.subscribe()
 
+        prepareCheckoutData()
         setQuery()
         setAdapter()
 
@@ -78,7 +82,9 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         }
 
         checkout_button.setOnClickListener {
-            startActivity(Intent(context,SetAddressActivity::class.java))
+            val i = Intent(context,SetAddressActivity::class.java)
+            i.putExtra("checkout_data",checkoutData)
+            startActivity(i)
             finish()
         }
 
@@ -88,6 +94,13 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         }
 
         presenter.getAllCart(reqCarts,true)
+    }
+
+    fun prepareCheckoutData(){
+        checkoutData.customerId = BuildConfig.DEFAULT_CUSTOMER_ID
+        checkoutData.address = ""
+        checkoutData.paymentId = 0
+        checkoutData.total = 0
     }
 
     fun setQuery(){
@@ -189,6 +202,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
 
     override fun onGetTotal(total: Int) {
         total_checkout_text_view.text = "Rp. $total"
+        checkoutData.total = total
     }
 
     override fun showErrorGetTotal(e: String) {

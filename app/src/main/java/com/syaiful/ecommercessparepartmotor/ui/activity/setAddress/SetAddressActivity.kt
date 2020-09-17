@@ -8,12 +8,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import com.syaiful.ecommercessparepartmotor.R
+import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
 import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivity
+import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.activity_set_address.*
+import kotlinx.android.synthetic.main.activity_set_address.back_imageview
 
 class SetAddressActivity : AppCompatActivity() {
 
     private lateinit var context: Context
+    private lateinit var checkoutData : Checkout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +27,10 @@ class SetAddressActivity : AppCompatActivity() {
 
     private fun initWidget(){
         this.context = this@SetAddressActivity
+
+        if (intent.hasExtra("checkout_data")){
+            checkoutData = intent.getSerializableExtra("checkout_data") as Checkout
+        }
 
         address_edittext.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
@@ -40,8 +48,11 @@ class SetAddressActivity : AppCompatActivity() {
         })
         checkout_button.visibility = View.GONE
         checkout_button.setOnClickListener {
+
+            checkoutData.address = address_edittext.text.toString()
+
             val i = Intent(context,CheckoutActivity::class.java)
-            i.putExtra("address", address_edittext.text.toString())
+            i.putExtra("checkout_data",checkoutData)
             startActivity(i)
             finish()
         }

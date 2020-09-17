@@ -1,6 +1,7 @@
 package com.syaiful.ecommercessparepartmotor.ui.activity.checkout
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
+import com.syaiful.ecommercessparepartmotor.ui.activity.transaction.TransactionActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CheckoutItemAdapter
 import com.syaiful.ecommercessparepartmotor.ui.dialog.ChoosePaymentDialog
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
@@ -32,7 +34,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     private val carts = ArrayList<Cart>()
     private lateinit var checkoutItemAdapter: CheckoutItemAdapter
     private val reqCarts = RequestListModel()
-    private val checkoutData = Checkout()
+
+    private lateinit var checkoutData : Checkout
 
     private val payments = ArrayList<Payment>()
     private val reqPayment = RequestListModel()
@@ -52,8 +55,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
         presenter.attach(this)
         presenter.subscribe()
 
-        if (intent.hasExtra("address")){
-            checkoutData.address = intent.getStringExtra("address")!!
+        if (intent.hasExtra("checkout_data")){
+            checkoutData = intent.getSerializableExtra("checkout_data") as Checkout
             address_textview.text = checkoutData.address
         }
 
@@ -70,19 +73,20 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
         choose_payment_method_button.isEnabled = false
         choose_payment_method_button.visibility = View.VISIBLE
         choose_payment_method_button.setOnClickListener {
-            val dialog = ChoosePaymentDialog(payments) { p,i ->
 
+            val dialog = ChoosePaymentDialog(payments) { p,i ->
                 for (pi in payments){
                     pi.selected = false
                 }
                 payments[i].selected = true
 
-                checkoutData.paymentId = it.id
+                checkoutData.paymentId = p.id
                 payment_method_choosed_button.text = "${getString(R.string.choose_payment)}\n${p.name}"
                 payment_method_choosed_button.visibility = View.VISIBLE
                 choose_payment_method_button.visibility = View.GONE
             }
             dialog.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+
         }
 
         payment_method_choosed_button.visibility = View.GONE
@@ -98,6 +102,7 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
             if (checkoutData.paymentId == 0){
                 return@setOnClickListener
             }
+            presenter.checkout(checkoutData)
         }
 
         presenter.getAllPayment(reqPayment,true)
@@ -178,6 +183,23 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
 
     override fun showErrorGetTotal(e: String) {
         checkout_main_layout.visibility = View.GONE
+        error.show()
+    }
+
+    override fun onCheckoutCompleted(refId: String) {
+        val i = Intent(context,TransactionActivity::class.java)
+        i.putExtra("ref_id",refId)
+        startActivity(i)
+        finish()
+    }
+
+    override fun showProgressCheckout(show: Boolean) {
+
+    }
+
+    override fun showErrorCheckout(e: String) {
+        checkout_main_layout.visibility = View.GONE
+        error.setMessage(e)
         error.show()
     }
 

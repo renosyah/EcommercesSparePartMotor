@@ -17,6 +17,10 @@ class Payment(
 
 ) : BaseModel {
 
+    constructor(id: Int) : this() {
+        this.id = id
+    }
+
     fun clone() : Payment {
         return Payment(
             this.id,

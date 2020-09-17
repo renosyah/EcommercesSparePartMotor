@@ -3,6 +3,7 @@ package com.syaiful.ecommercessparepartmotor.ui.activity.checkout
 import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.ResponseModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
+import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.service.RetrofitService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -101,6 +102,29 @@ class CheckoutActivityPresenter : CheckoutActivityContract.Presenter {
 
             }, { t: Throwable ->
                 view.showErrorGetTotal(t.message!!)
+            })
+
+        subscriptions.add(subscribe)
+    }
+
+    override fun checkout(c: Checkout) {
+        val subscribe = api.checkout(c.clone())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ result: ResponseModel<String>? ->
+
+                if (result != null) {
+
+                    if (result.Error != null){
+                        view.showErrorCheckout(result.Error!!)
+                    }
+                    if (result.Data != null) {
+                        view.onCheckoutCompleted(result.Data!!)
+                    }
+                }
+
+            }, { t: Throwable ->
+                view.showErrorCheckout(t.message!!)
             })
 
         subscriptions.add(subscribe)
