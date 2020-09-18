@@ -144,7 +144,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
     override fun onEmptyGetAllCart() {
         if (reqCarts.offset == 0){
             emptyLayout.show()
-            carts_recycleview.visibility = View.GONE
+            cart_scrollview.visibility = View.GONE
             go_home.visibility = View.VISIBLE
             checkout_layout.visibility = View.GONE
         }
@@ -156,7 +156,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
         }
         carts.addAll(data)
         cartAdapter.notifyDataSetChanged()
-        carts_recycleview.visibility = View.VISIBLE
+        cart_scrollview.visibility = View.VISIBLE
         checkout_layout.visibility = View.VISIBLE
         emptyLayout.hide()
 
@@ -165,12 +165,12 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
 
     override fun showProgressGetAllCart(show: Boolean) {
         loading.setVisibility(show)
-        carts_recycleview.visibility = if (show) View.GONE else View.VISIBLE
+        cart_scrollview.visibility = if (show) View.GONE else View.VISIBLE
         checkout_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetAllCart(e: String) {
-        carts_recycleview.visibility = View.GONE
+        cart_scrollview.visibility = View.GONE
         checkout_layout.visibility = View.GONE
         error.show()
     }
@@ -181,12 +181,12 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
 
     override fun showProgressUpdateCart(show: Boolean) {
         loading.setVisibility(show)
-        carts_recycleview.visibility = if (show) View.GONE else View.VISIBLE
+        cart_scrollview.visibility = if (show) View.GONE else View.VISIBLE
         checkout_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorUpdateCart(e: String) {
-        carts_recycleview.visibility = View.GONE
+        cart_scrollview.visibility = View.GONE
         checkout_layout.visibility = View.GONE
         error.show()
     }
@@ -197,12 +197,12 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
 
     override fun showProgressDeleteCart(show: Boolean) {
         loading.setVisibility(show)
-        carts_recycleview.visibility = if (show) View.GONE else View.VISIBLE
+        cart_scrollview.visibility = if (show) View.GONE else View.VISIBLE
         checkout_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorDeleteCart(e: String) {
-        carts_recycleview.visibility = View.GONE
+        cart_scrollview.visibility = View.GONE
         checkout_layout.visibility = View.GONE
         error.show()
     }

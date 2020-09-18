@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.GridLayoutManager
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
@@ -54,6 +55,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         if (SerializableSave(context,SerializableSave.userDataFileSessionName).load() == null){
             SerializableSave(context,SerializableSave.userDataFileSessionName).save(
