@@ -56,8 +56,6 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         presenter.attach(this)
         presenter.subscribe()
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
         if (SerializableSave(context,SerializableSave.userDataFileSessionName).load() == null){
             SerializableSave(context,SerializableSave.userDataFileSessionName).save(
                 Customer(1,"ipul","ipul","ipul@gmail.com","123")
