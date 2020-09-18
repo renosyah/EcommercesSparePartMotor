@@ -39,5 +39,7 @@
     <string name="payment_remain">Sisa waktu pembayaran</string>
     <string name="copied">Berhasil Disalin</string>
     <string name="loading_data">Memuat data...</string>
+    <string name="stock">Stok</string>
+    <string name="loading_transaction">Menuat pembayaran...</string>
 
 </resources>

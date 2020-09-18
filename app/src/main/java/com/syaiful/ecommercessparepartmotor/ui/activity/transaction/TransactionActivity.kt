@@ -16,7 +16,13 @@ import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.model.transaction.Transaction
+import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
+import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_transaction.*
+import kotlinx.android.synthetic.main.activity_transaction.error_layout
+import kotlinx.android.synthetic.main.activity_transaction.loading_layout
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -30,6 +36,9 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     private var refId : String = ""
 
     lateinit var timer : CountDownTimer
+
+    lateinit var loading : LoadingLayout
+    lateinit var error : ErrorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +56,16 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
         if (intent.hasExtra("ref_id")){
             refId = intent.getStringExtra("ref_id")!!
         }
+
+        loading = LoadingLayout(context,loading_layout)
+        loading.setMessage(getString(R.string.loading_transaction))
+        loading.hide()
+
+        error = ErrorLayout(context,error_layout) {
+            presenter.getOneTransactionByRef(Transaction(refId),true)
+        }
+        error.setMessage(getString(R.string.something_wrong))
+        error.hide()
 
         back_imageview.setOnClickListener {
             finish()
@@ -91,16 +110,18 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     }
 
     override fun onGetOneTransactionByRef(transaction: Transaction) {
-        total_payment_textview.text = "Rp ${transaction.total}"
+        total_payment_textview.text = "Rp ${decimalFormat(transaction.total)}"
         presenter.getOnePayment(Payment(transaction.paymentId),true)
     }
 
     override fun showProgressGetOneTransactionByRef(show: Boolean) {
-
+        loading.setVisibility(show)
+        transaction_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetOneTransactionByRef(e: String) {
-        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+        transaction_layout.visibility = View.GONE
+        error.show()
     }
 
     override fun onGetOnePayment(payment: Payment) {
@@ -112,18 +133,22 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     }
 
     override fun showProgressGetOnePayment(show: Boolean) {
-
+        loading.setVisibility(show)
+        transaction_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetOnePayment(e: String) {
-        Toast.makeText(context,e,Toast.LENGTH_SHORT).show()
+        transaction_layout.visibility = View.GONE
+        error.show()
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.unsubscribe()
-        timer.onFinish()
+        if (this::timer.isInitialized){
+            timer.onFinish()
+        }
     }
 
     private fun injectDependency(){

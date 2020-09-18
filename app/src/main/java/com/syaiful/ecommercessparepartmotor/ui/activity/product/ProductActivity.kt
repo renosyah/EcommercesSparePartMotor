@@ -18,6 +18,7 @@ import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
 import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_product.*
 import kotlinx.android.synthetic.main.activity_product.back_imageview
@@ -57,7 +58,7 @@ class ProductActivity : AppCompatActivity(),ProductActivityContract.View {
 
             name_text_view.text = product.name
             detail_text_view.text = " ${product.detail}"
-            price_text_view.text = " Rp. ${product.price}"
+            price_text_view.text = " Rp. ${decimalFormat(product.price)}"
             stock_text_view.text = " ${product.stock}"
             rating_text_view.text = " ${product.rating}"
 

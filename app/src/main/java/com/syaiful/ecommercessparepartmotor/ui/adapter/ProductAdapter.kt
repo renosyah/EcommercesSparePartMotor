@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.model.product.Product
+import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
 
 class ProductAdapter : RecyclerView.Adapter<ProductAdapter.Holder> {
 
@@ -48,7 +49,7 @@ class ProductAdapter : RecyclerView.Adapter<ProductAdapter.Holder> {
             .into(holder.image)
 
         holder.name.text = item.name
-        holder.description.text = "Rp. ${item.price}\nStock : ${item.stock}"
+        holder.description.text = "Rp. ${decimalFormat(item.price)}\n${context.getString(R.string.stock)} : ${item.stock}"
         holder.layout.setOnClickListener {
             onClick.invoke(item,position)
         }

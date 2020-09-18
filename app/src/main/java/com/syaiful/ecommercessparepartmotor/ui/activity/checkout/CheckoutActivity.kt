@@ -19,6 +19,7 @@ import com.syaiful.ecommercessparepartmotor.ui.adapter.CheckoutItemAdapter
 import com.syaiful.ecommercessparepartmotor.ui.dialog.ChoosePaymentDialog
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
 import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_checkout.*
 import javax.inject.Inject
@@ -188,8 +189,8 @@ class CheckoutActivity : AppCompatActivity(),CheckoutActivityContract.View {
     }
 
     override fun onGetTotal(total: Int) {
-        total_textview.text = "Rp. $total"
-        total_pay_textview.text = "Rp. $total"
+        total_textview.text = "Rp. ${decimalFormat(total)}"
+        total_pay_textview.text = "Rp. ${decimalFormat(total)}"
     }
 
     override fun showErrorGetTotal(e: String) {

@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.product.Product
+import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
 
 class CartAdapter : RecyclerView.Adapter<CartAdapter.Holder> {
 
@@ -44,7 +45,7 @@ class CartAdapter : RecyclerView.Adapter<CartAdapter.Holder> {
             .into(holder.image)
 
         holder.name.text = item.product.name
-        holder.description.text = "Rp. ${item.price}"
+        holder.description.text = "Rp. ${decimalFormat(item.price)}"
         holder.quantity.text = item.quantity.toString()
 
         holder.inc.setOnClickListener {

@@ -20,6 +20,7 @@ import com.syaiful.ecommercessparepartmotor.ui.adapter.CartAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
+import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
 import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_carts.*
 import kotlinx.android.synthetic.main.activity_carts.back_imageview
@@ -208,7 +209,7 @@ class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
     }
 
     override fun onGetTotal(total: Int) {
-        total_checkout_text_view.text = "Rp. $total"
+        total_checkout_text_view.text = "Rp. ${decimalFormat(total)}"
         checkoutData.total = total
     }
 
