@@ -53,22 +53,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    app:cardCornerRadius="15dp">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/banner_recycleview"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/motor" />
+                        android:layout_height="200dp" />
 
-                </androidx.cardview.widget.CardView>
+                    <me.relex.circleindicator.CircleIndicator2
+                        android:id="@+id/indicator"
+                        android:layout_gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"/>
+
+                </FrameLayout>
 
 
                 <TextView
