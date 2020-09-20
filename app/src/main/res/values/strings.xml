@@ -40,6 +40,6 @@
     <string name="copied">Berhasil Disalin</string>
     <string name="loading_data">Memuat data...</string>
     <string name="stock">Stok</string>
-    <string name="loading_transaction">Menuat pembayaran...</string>
+    <string name="loading_transaction">Memuat pembayaran...</string>
 
 </resources>
