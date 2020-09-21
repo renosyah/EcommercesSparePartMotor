@@ -12,20 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.transaction.TransactionActivity"></activity>
+        <activity android:name=".ui.activity.loginOrRegister.LoginOrRegisterActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.transaction.TransactionActivity" />
         <activity android:name=".ui.activity.checkout.CheckoutActivity" />
         <activity android:name=".ui.activity.setAddress.SetAddressActivity" />
         <activity android:name=".ui.activity.search.SearchResultActivity" />
         <activity android:name=".ui.activity.carts.CartsActivity" />
         <activity android:name=".ui.activity.product.ProductActivity" />
         <activity android:name=".ui.activity.products.ProductsActivity" />
-        <activity android:name=".ui.activity.home.HomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.activity.home.HomeActivity" />
     </application>
 
 </manifest>

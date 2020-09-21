@@ -9,6 +9,8 @@ import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivit
 import com.syaiful.ecommercessparepartmotor.ui.activity.checkout.CheckoutActivityPresenter
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivityContract
 import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivityPresenter
+import com.syaiful.ecommercessparepartmotor.ui.activity.loginOrRegister.LoginOrRegisterActivityContract
+import com.syaiful.ecommercessparepartmotor.ui.activity.loginOrRegister.LoginOrRegisterActivityPresenter
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivityContract
 import com.syaiful.ecommercessparepartmotor.ui.activity.product.ProductActivityPresenter
 import com.syaiful.ecommercessparepartmotor.ui.activity.products.ProductsActivityContract
@@ -65,5 +67,10 @@ class ActivityModule(private var activity : Activity) {
     @Provides
     fun provideTransactionActivityPresenter(): TransactionActivityContract.Presenter {
         return TransactionActivityPresenter()
+    }
+
+    @Provides
+    fun provideLoginOrRegisterActivityPresenter(): LoginOrRegisterActivityContract.Presenter {
+        return LoginOrRegisterActivityPresenter()
     }
 }

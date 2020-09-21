@@ -39,6 +39,13 @@ class ErrorLayout {
         includeParent.visibility = (if (v) View.VISIBLE else View.GONE)
     }
 
+    fun setButtonColor(c :Int){
+        this.ok.setBackgroundColor(c)
+    }
+    fun setButtonMessageColor(c :Int){
+        this.ok.setTextColor(c)
+    }
+
     fun show() {
         includeParent.visibility = (View.VISIBLE)
     }

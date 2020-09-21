@@ -7,6 +7,7 @@ import com.syaiful.ecommercessparepartmotor.model.ResponseModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.category.Category
 import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
+import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.model.transaction.Transaction
@@ -26,6 +27,12 @@ import java.util.*
 interface RetrofitService {
 
     // add more end point to access
+    @POST("api/customer/login.php")
+    fun login(@Body customer: Customer): Observable<ResponseModel<Customer>>
+
+    @POST("api/customer/add.php")
+    fun register(@Body customer: Customer): Observable<ResponseModel<Customer>>
+
     @POST("api/category/list.php")
     fun allCategory(@Body req : RequestListModel): Observable<ResponseModel<ArrayList<Category>>>
 

@@ -57,12 +57,6 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         presenter.attach(this)
         presenter.subscribe()
 
-        if (SerializableSave(context,SerializableSave.userDataFileSessionName).load() == null){
-            SerializableSave(context,SerializableSave.userDataFileSessionName).save(
-                Customer(1,"ipul","ipul","ipul@gmail.com","123")
-            )
-        }
-
         banners.add("http://app-demo-api.000webhostapp.com/img/product/s6hkc7cBHC.png")
         banners.add("http://app-demo-api.000webhostapp.com/img/product/50aucZZ8LB.png")
         banners.add("http://app-demo-api.000webhostapp.com/img/product/e2oL9Sa55Q.png")

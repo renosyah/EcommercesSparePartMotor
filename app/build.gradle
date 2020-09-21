@@ -24,7 +24,7 @@ android {
 
     buildTypes.each {
         it.minifyEnabled true
-        it.buildConfigField "String", "SERVER_URL", "\"http://app-demo-api.000webhostapp.com/\""
+        it.buildConfigField "String", "SERVER_URL", "\"http://192.168.100.81:80/\""
         it.buildConfigField "int","DEFAULT_LIMIT","100"
     }
 

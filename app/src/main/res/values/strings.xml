@@ -41,5 +41,20 @@
     <string name="loading_data">Memuat data...</string>
     <string name="stock">Stok</string>
     <string name="loading_transaction">Memuat pembayaran...</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="not_have_account">"Belum punya akun?  "</string>
+    <string name="register">Daftar</string>
+    <string name="name">Nama lengkap</string>
+    <string name="confirm_password">Konfirmasi password</string>
+    <string name="have_account">"Sudah punya akun?  "</string>
+    <string name="login_form_empty">Email atau password kosong!</string>
+    <string name="loading_login">Login...</string>
+    <string name="login_failed">Email atau password salah!</string>
+    <string name="register_form_empty">Mohon isi semua form pendaftaran!</string>
+    <string name="register_confirm_password">Password tidak sesuai!</string>
+    <string name="loading_register">Mendaftar...</string>
+    <string name="register_failed">Gagal mendaftar, harap coba lagi...</string>
 
 </resources>
