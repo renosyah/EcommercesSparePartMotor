@@ -78,7 +78,7 @@
     <string name="change_image">Ganti gambar</string>
     <string name="upload">Kirim</string>
     <string name="process">Proses...</string>
-    <string name="loading_upload">Uploading...</string>
+    <string name="loading_upload">Mengunggah...</string>
     <string name="title_dialog_uploadimage">Pilih gambar</string>
     <string name="camera">Ambil Gambar</string>
     <string name="galery">Buka Galery</string>

@@ -38,6 +38,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
     lateinit var transaction: Transaction
 
     lateinit var timer : CountDownTimer
+    private var minuteLeft : Int = 60
 
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
@@ -57,6 +58,10 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
 
         if (intent.hasExtra("ref_id")){
             refId = intent.getStringExtra("ref_id")!!
+        }
+
+        if (intent.hasExtra("minute_left")){
+            minuteLeft = intent.getIntExtra("minute_left",60)
         }
 
         transaction_layout.visibility = View.VISIBLE
@@ -93,8 +98,8 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
         presenter.getOneTransactionByRef(Transaction(refId),true)
     }
 
-    private fun startCountDown(minute : Long){
-         timer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minute), TimeUnit.SECONDS.toMillis(1L)) {
+    private fun startCountDown(minute : Int){
+         timer = object : CountDownTimer(TimeUnit.MINUTES.toMillis(minute.toLong()), TimeUnit.SECONDS.toMillis(1L)) {
             override fun onTick(milis: Long) {
                 val min = TimeUnit.MILLISECONDS.toMinutes(milis)
                 val sec = TimeUnit.MILLISECONDS.toSeconds(milis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milis))
@@ -151,7 +156,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
         copy_imageview.setOnClickListener {
             copyAccountNumber()
         }
-        startCountDown(1)
+        startCountDown(minuteLeft)
     }
 
     override fun showProgressGetOnePayment(show: Boolean) {
