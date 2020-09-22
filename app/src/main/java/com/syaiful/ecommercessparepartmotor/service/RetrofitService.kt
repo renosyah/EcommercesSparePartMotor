@@ -11,8 +11,11 @@ import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.model.product.Product
 import com.syaiful.ecommercessparepartmotor.model.transaction.Transaction
+import com.syaiful.ecommercessparepartmotor.model.uploadResponse.UploadResponse
+import com.syaiful.ecommercessparepartmotor.model.validateTransaction.ValidateTransaction
 import io.reactivex.Observable
 import okhttp3.Interceptor
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okio.Buffer
@@ -20,7 +23,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import java.io.IOException
 import java.util.*
 
@@ -65,6 +70,14 @@ interface RetrofitService {
 
     @POST("api/checkout/add.php")
     fun checkout(@Body checkout: Checkout): Observable<ResponseModel<String>>
+
+    @POST("api/validate_transaction/add.php")
+    fun addValidateTransaction(@Body validateTransaction: ValidateTransaction): Observable<ResponseModel<String>>
+
+
+    @Multipart
+    @POST("/api/upload_file.php")
+    fun upload(@Part file: MultipartBody.Part): Observable<ResponseModel<UploadResponse>>
 
     companion object {
 

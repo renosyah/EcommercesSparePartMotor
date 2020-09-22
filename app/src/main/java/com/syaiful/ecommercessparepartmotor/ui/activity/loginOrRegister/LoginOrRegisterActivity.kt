@@ -1,11 +1,15 @@
 package com.syaiful.ecommercessparepartmotor.ui.activity.loginOrRegister
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
@@ -30,6 +34,7 @@ class LoginOrRegisterActivity : AppCompatActivity(),LoginOrRegisterActivityContr
 
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

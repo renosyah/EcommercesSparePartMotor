@@ -71,5 +71,17 @@
     <string name="my_profile">Profile ku</string>
     <string name="my_transaction">Pesanan ku</string>
     <string name="comming_soon">Coming soon...</string>
+    <string name="upload_transaction_nota">Unggah bukti Transfer</string>
+    <string name="back_to_home">Kembali ke beranda</string>
+    <string name="time_out_message">Maaf!\nwaktu pembayaran telah habis</string>
+    <string name="choose_image">Pilih Gambar</string>
+    <string name="change_image">Ganti gambar</string>
+    <string name="upload">Kirim</string>
+    <string name="process">Proses...</string>
+    <string name="loading_upload">Uploading...</string>
+    <string name="title_dialog_uploadimage">Pilih gambar</string>
+    <string name="camera">Ambil Gambar</string>
+    <string name="galery">Buka Galery</string>
+    <string name="validation_sended">Selamat anda berhasil.\nbukti transfer berhasil dikirim</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.syaiful.ecommercessparepartmotor.ui.activity.transaction
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.Gravity
@@ -16,6 +17,7 @@ import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
 import com.syaiful.ecommercessparepartmotor.model.payment.Payment
 import com.syaiful.ecommercessparepartmotor.model.transaction.Transaction
+import com.syaiful.ecommercessparepartmotor.ui.activity.upload.UploadActivity
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
 import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
@@ -33,6 +35,7 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
 
     private lateinit var context: Context
     private var refId : String = ""
+    lateinit var transaction: Transaction
 
     lateinit var timer : CountDownTimer
 
@@ -56,6 +59,9 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
             refId = intent.getStringExtra("ref_id")!!
         }
 
+        transaction_layout.visibility = View.VISIBLE
+        transaction_message_layout.visibility = View.GONE
+
         loading = LoadingLayout(context,loading_layout)
         loading.setMessage(getString(R.string.loading_transaction))
         loading.hide()
@@ -70,6 +76,20 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
             finish()
         }
 
+        back_to_home_button.setOnClickListener {
+            finish()
+        }
+
+        upload_transaction_button.visibility = View.GONE
+        upload_transaction_button.setOnClickListener {
+            if (this::transaction.isInitialized){
+                val i = Intent(context,UploadActivity::class.java)
+                i.putExtra("transaction",transaction)
+                startActivity(i)
+                finish()
+            }
+        }
+
         presenter.getOneTransactionByRef(Transaction(refId),true)
     }
 
@@ -82,7 +102,8 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
             }
 
             override fun onFinish() {
-
+                transaction_layout.visibility = View.GONE
+                transaction_message_layout.visibility = View.VISIBLE
             }
 
         }
@@ -108,18 +129,20 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
         toast.show()
     }
 
-    override fun onGetOneTransactionByRef(transaction: Transaction) {
+    override fun onGetOneTransactionByRef(t: Transaction) {
+        transaction = t
         total_payment_textview.text = "Rp ${decimalFormat(transaction.total)}"
         presenter.getOnePayment(Payment(transaction.paymentId),true)
+        upload_transaction_button.visibility = View.VISIBLE
     }
 
     override fun showProgressGetOneTransactionByRef(show: Boolean) {
         loading.setVisibility(show)
-        transaction_layout.visibility = if (show) View.GONE else View.VISIBLE
+        transaction_detail_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetOneTransactionByRef(e: String) {
-        transaction_layout.visibility = View.GONE
+        transaction_detail_layout.visibility = View.GONE
         error.show()
     }
 
@@ -128,16 +151,16 @@ class TransactionActivity : AppCompatActivity(),TransactionActivityContract.View
         copy_imageview.setOnClickListener {
             copyAccountNumber()
         }
-        startCountDown(60)
+        startCountDown(1)
     }
 
     override fun showProgressGetOnePayment(show: Boolean) {
         loading.setVisibility(show)
-        transaction_layout.visibility = if (show) View.GONE else View.VISIBLE
+        transaction_detail_layout.visibility = if (show) View.GONE else View.VISIBLE
     }
 
     override fun showErrorGetOnePayment(e: String) {
-        transaction_layout.visibility = View.GONE
+        transaction_detail_layout.visibility = View.GONE
         error.show()
     }
 

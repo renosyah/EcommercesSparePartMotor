@@ -1,11 +1,16 @@
 package com.syaiful.ecommercessparepartmotor.ui.activity.home
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -47,6 +52,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
 
+    private val MY_PERMISSIONS_REQUEST = 121
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +117,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
             startActivity(Intent(context, CartsActivity::class.java))
         }
 
+        requestPermission{}
+
         presenter.getAllCategory(reqCategories,true)
     }
 
@@ -173,6 +181,29 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     override fun showErrorGetAllCategory(e: String) {
         home_scrollview.visibility = View.GONE
         error.show()
+    }
+
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == MY_PERMISSIONS_REQUEST) {
+            startActivity(Intent(context, HomeActivity::class.java))
+            finish()
+        }
+    }
+
+    private fun requestPermission(next: (Boolean)->Unit) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((context as Activity),arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA), MY_PERMISSIONS_REQUEST)
+
+        } else {
+            next.invoke(true)
+        }
     }
 
 

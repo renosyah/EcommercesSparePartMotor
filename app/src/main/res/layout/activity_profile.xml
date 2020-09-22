@@ -50,7 +50,6 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/checkout_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
@@ -80,10 +79,10 @@
                     android:id="@+id/name_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/nav_header_vertical_spacing"
                     android:gravity="center"
-                    android:textAlignment="center"
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
                     android:text=" "
+                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
@@ -94,8 +93,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textAlignment="center"
                     android:text=" "
+                    android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp" />
 

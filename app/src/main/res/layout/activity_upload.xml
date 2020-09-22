@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
+    android:background="@color/colorAccent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    tools:context=".ui.activity.transaction.TransactionActivity">
+    tools:context=".ui.activity.upload.UploadActivity">
 
 
     <LinearLayout
-        android:id="@+id/transaction_layout"
+        android:id="@+id/main_upload_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="left|center"
-                android:text="@string/transaction"
+                android:text="@string/upload_transaction_nota"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -52,115 +52,49 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/transaction_detail_layout"
+            android:id="@+id/upload_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/total_pay"
-                    android:textColor="@color/textColorWhite"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/total_payment_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Rp. -"
-                    android:textColor="@color/textColorGreen"
-                    android:textSize="24sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/account_number"
-                            android:textColor="@color/textColorWhite"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/payment_detail_textview"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="xxx-xxxx-xxxxxx"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="24sp" />
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/copy_imageview"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_weight="1"
-                        app:srcCompat="@drawable/copy" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/payment_remain"
-                    android:textColor="@color/textColorWhite"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/remain_time_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="58 menit 23 detik"
-                    android:textColor="@color/textColorRed"
-                    android:textSize="24sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical" />
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/image_preview_imageview"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_margin="30dp"
+                    android:contentDescription="@string/nav_header_desc"
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                    app:srcCompat="@drawable/ic_menu_gallery" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/upload_transaction_button"
+                android:id="@+id/change_image_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_shape_2"
+                android:minHeight="60dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/change_image"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/send_image_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -171,13 +105,11 @@
                 android:minHeight="60dp"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
-                android:text="@string/upload_transaction_nota"
+                android:text="@string/upload"
                 android:textAllCaps="false"
                 android:textColor="@color/textColorWhite"
                 android:textSize="18sp" />
-
         </LinearLayout>
-
 
         <include
             android:id="@+id/loading_layout"
@@ -195,7 +127,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/transaction_message_layout"
+        android:id="@+id/message_upload_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -216,13 +148,13 @@
                 android:layout_margin="20dp"
                 android:contentDescription="@string/nav_header_desc"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
-                app:srcCompat="@drawable/timeout" />
+                app:srcCompat="@drawable/sended" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/time_out_message"
+                android:text="@string/validation_sended"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="20sp" />
@@ -247,6 +179,5 @@
             android:textSize="18sp" />
 
     </LinearLayout>
-
 
 </LinearLayout>
