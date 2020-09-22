@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,9 @@ import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.category.Category
 import com.syaiful.ecommercessparepartmotor.model.customer.Customer
 import com.syaiful.ecommercessparepartmotor.ui.activity.carts.CartsActivity
+import com.syaiful.ecommercessparepartmotor.ui.activity.loginOrRegister.LoginOrRegisterActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.products.ProductsActivity
+import com.syaiful.ecommercessparepartmotor.ui.activity.profile.ProfileActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.AdapterBanner
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CategoryAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
@@ -23,8 +26,8 @@ import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
 import com.syaiful.ecommercessparepartmotor.util.SerializableSave
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.content_home.*
 import javax.inject.Inject
-
 
 class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
 
@@ -44,18 +47,25 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
     lateinit var loading : LoadingLayout
     lateinit var error : ErrorLayout
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         initWidget()
     }
 
-    private fun initWidget() {
+    private fun initWidget(){
         this.context = this@HomeActivity
 
         injectDependency()
         presenter.attach(this)
         presenter.subscribe()
+
+        if (SerializableSave(context, SerializableSave.userDataFileSessionName).load() != null){
+            val customer = SerializableSave(context, SerializableSave.userDataFileSessionName).load() as Customer
+            nav_name_textview.text = customer.name
+            nav_email_textview.text = customer.email
+        }
 
         banners.add("http://app-demo-api.000webhostapp.com/img/product/s6hkc7cBHC.png")
         banners.add("http://app-demo-api.000webhostapp.com/img/product/50aucZZ8LB.png")
@@ -78,12 +88,32 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         error.setMessage(getString(R.string.something_wrong))
         error.hide()
 
+        side_menu_imageview.setOnClickListener {
+            drawer_layout.openDrawer(nav_view)
+        }
+
+        nav_menu_profile_textview.setOnClickListener {
+            startActivity(Intent(context,ProfileActivity::class.java))
+        }
+
+        nav_menu_transactions_textview.setOnClickListener {
+            Toast.makeText(context,getText(R.string.comming_soon),Toast.LENGTH_SHORT).show()
+        }
+
+        nav_logout_button.setOnClickListener {
+            if (SerializableSave(context, SerializableSave.userDataFileSessionName).delete()){
+                startActivity(Intent(context,LoginOrRegisterActivity::class.java))
+                finish()
+            }
+        }
+
         cart_menu_imageview.setOnClickListener {
             startActivity(Intent(context, CartsActivity::class.java))
         }
 
         presenter.getAllCategory(reqCategories,true)
     }
+
 
     fun setQuery(){
         reqCategories.searchBy = "name"
@@ -107,7 +137,7 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
         bannerAdapter = AdapterBanner(context,banners)
         banner_recycleview.adapter = bannerAdapter
         banner_recycleview.apply {
-            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
         }
 
         val snapHelper = PagerSnapHelper()

@@ -1,116 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
-    tools:context=".ui.activity.home.HomeActivity">
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <LinearLayout
+    <include
+        layout="@layout/app_bar_home"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:layout_height="match_parent" />
 
-        <TextView
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:gravity="left|center"
-            android:text="@string/home_title"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/cart_menu_imageview"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/cart" />
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/home_scrollview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:visibility="visible">
+            android:orientation="vertical">
 
             <LinearLayout
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <FrameLayout
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/banner_recycleview"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-
-                    <me.relex.circleindicator.CircleIndicator2
-                        android:id="@+id/indicator"
-                        android:layout_gravity="bottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"/>
-
-                </FrameLayout>
-
+                    android:layout_height="150dp"
+                    android:layout_margin="20dp"
+                    android:contentDescription="@string/nav_header_desc"
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                    app:srcCompat="@drawable/icn" />
 
                 <TextView
+                    android:id="@+id/nav_name_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/select_categories"
-                    android:textColor="@color/textColorWhite"
+                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                    android:text=" "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/categories_recycleview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/nav_email_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" "
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
-                <include
-                    android:id="@+id/empty_layout"
-                    layout="@layout/empty_message_layout"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:visibility="gone" />
+                    android:layout_height="30dp"
+                    android:orientation="vertical"></LinearLayout>
+
 
             </LinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <include
-            android:id="@+id/loading_layout"
-            layout="@layout/loading_data_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical" />
 
-        <include
-            android:id="@+id/error_layout"
-            layout="@layout/error_message_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:visibility="gone" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:minHeight="150dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-    </FrameLayout>
+                    <TextView
+                        android:id="@+id/nav_menu_profile_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="left|center"
+                        android:text="@string/my_profile"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-</LinearLayout>
+                    <TextView
+                        android:id="@+id/nav_menu_transactions_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="left|center"
+                        android:text="@string/my_transaction"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/nav_logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_shape_3"
+                android:minHeight="60dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/logout"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

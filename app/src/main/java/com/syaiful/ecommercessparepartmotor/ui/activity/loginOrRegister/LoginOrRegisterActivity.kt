@@ -110,7 +110,7 @@ class LoginOrRegisterActivity : AppCompatActivity(),LoginOrRegisterActivityContr
 
     override fun onLogin(customer: Customer) {
         if (SerializableSave(context, SerializableSave.userDataFileSessionName).save(customer)) {
-            startActivity(Intent(context,HomeActivity::class.java))
+            startActivity(Intent(context, HomeActivity::class.java))
             finish()
         }
     }

@@ -19,7 +19,6 @@ import com.syaiful.ecommercessparepartmotor.model.transaction.Transaction
 import com.syaiful.ecommercessparepartmotor.ui.util.ErrorLayout
 import com.syaiful.ecommercessparepartmotor.ui.util.LoadingLayout
 import com.syaiful.ecommercessparepartmotor.util.Formatter.Companion.decimalFormat
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_transaction.*
 import kotlinx.android.synthetic.main.activity_transaction.error_layout
 import kotlinx.android.synthetic.main.activity_transaction.loading_layout

@@ -12,9 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activity.profile.ProfileActivity"></activity>
+        <activity
+            android:name=".ui.activity.home.HomeActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activity.loginOrRegister.LoginOrRegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -25,7 +31,6 @@
         <activity android:name=".ui.activity.carts.CartsActivity" />
         <activity android:name=".ui.activity.product.ProductActivity" />
         <activity android:name=".ui.activity.products.ProductsActivity" />
-        <activity android:name=".ui.activity.home.HomeActivity" />
     </application>
 
 </manifest>

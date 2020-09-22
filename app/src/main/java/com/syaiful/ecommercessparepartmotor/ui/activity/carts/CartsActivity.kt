@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.syaiful.ecommercessparepartmotor.BuildConfig
 import com.syaiful.ecommercessparepartmotor.R
 import com.syaiful.ecommercessparepartmotor.di.component.DaggerActivityComponent
 import com.syaiful.ecommercessparepartmotor.di.module.ActivityModule
@@ -14,7 +13,6 @@ import com.syaiful.ecommercessparepartmotor.model.RequestListModel
 import com.syaiful.ecommercessparepartmotor.model.cart.Cart
 import com.syaiful.ecommercessparepartmotor.model.checkout.Checkout
 import com.syaiful.ecommercessparepartmotor.model.customer.Customer
-import com.syaiful.ecommercessparepartmotor.ui.activity.home.HomeActivity
 import com.syaiful.ecommercessparepartmotor.ui.activity.setAddress.SetAddressActivity
 import com.syaiful.ecommercessparepartmotor.ui.adapter.CartAdapter
 import com.syaiful.ecommercessparepartmotor.ui.util.EmptyLayout
@@ -27,8 +25,6 @@ import kotlinx.android.synthetic.main.activity_carts.back_imageview
 import kotlinx.android.synthetic.main.activity_carts.empty_layout
 import kotlinx.android.synthetic.main.activity_carts.error_layout
 import kotlinx.android.synthetic.main.activity_carts.loading_layout
-import kotlinx.android.synthetic.main.activity_products.*
-import kotlinx.android.synthetic.main.adapter_cart.*
 import javax.inject.Inject
 
 class CartsActivity : AppCompatActivity(),CartsActivityContract.View {
