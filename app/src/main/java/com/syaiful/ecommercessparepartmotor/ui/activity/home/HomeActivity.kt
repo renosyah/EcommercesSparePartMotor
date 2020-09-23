@@ -117,6 +117,8 @@ class HomeActivity : AppCompatActivity(), HomeActivityContract.View {
             startActivity(Intent(context, CartsActivity::class.java))
         }
 
+        nav_menu_layout.visibility = View.INVISIBLE
+
         requestPermission{}
 
         presenter.getAllCategory(reqCategories,true)
