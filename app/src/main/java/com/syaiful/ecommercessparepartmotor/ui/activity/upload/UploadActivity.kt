@@ -171,7 +171,7 @@ class UploadActivity : AppCompatActivity(),UploadActivityContract.View {
     }
 
     override fun onUploaded(uploadResponse: UploadResponse) {
-        validateTransaction.imageId = "${BuildConfig.SERVER_URL}${uploadResponse.url}"
+        validateTransaction.imageUrl = "${BuildConfig.SERVER_URL}${uploadResponse.url}"
         presenter.addValidateTransaction(validateTransaction,true)
     }
 

@@ -11,14 +11,14 @@ class ValidateTransaction(
     var transactionId : Int = 0,
 
     @SerializedName("image_url")
-    var imageId : String = ""
+    var imageUrl : String = ""
 
 ) :BaseModel {
     fun clone() : ValidateTransaction {
         return ValidateTransaction(
             this.id,
             this.transactionId,
-            this.imageId
+            this.imageUrl
         )
     }
 }
